@@ -11,6 +11,10 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import { ToastAndroid } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const PaymentQRScreen = ({ navigation, route }) => {
   const { donationAmount, date, donationNote } = route.params;
@@ -265,6 +269,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "auto",
     backgroundColor: "white",
+    marginTop: hp(5),
   },
   imageQR: {
     width: 200,

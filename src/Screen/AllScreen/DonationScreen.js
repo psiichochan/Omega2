@@ -27,9 +27,18 @@ const DonationsScreen = ({ navigation, username }) => {
   }, [selectedValue]);
 
   const makeDonation = () => {
-    // Your existing makeDonation logic
-  };
+    const amount = parseFloat(donationAmount);
+    if (!isNaN(amount) && amount > 0) {
+      setDonationAmount("");
+      setDonationNote("");
 
+      navigation.navigate("Payment", {
+        donationAmount: amount,
+        date: new Date(),
+        donationNote: donationNote,
+      });
+    }
+  };
   const GetApprovedDonationList = async () => {
     const apiUrl = `http://3.6.89.38:9090/api/v1/donation/get/approved?filter=${selectedValue}`;
 
@@ -37,9 +46,11 @@ const DonationsScreen = ({ navigation, username }) => {
       const response = await axios.get(apiUrl);
       if (response.status === 200) {
         const data = response.data.data;
-        console.log("data", response.data);
+
         setTotalDonations(response.data.totalAmount);
         setDonations(data);
+      } else {
+        setDonations([]);
       }
     } catch (error) {
       console.error("Error fetching donation list:", error);
